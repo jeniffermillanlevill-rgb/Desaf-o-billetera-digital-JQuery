@@ -12,19 +12,34 @@
   <div class="container">
     <h1 class="mt-4">Últimos movimientos</h1>
 
-    <div class="card p-4 mt-3">
-      <label for="filtroMovimientos">Filtrar por tipo:</label>
+   <div class="card p-4 mt-3">
 
-      <select id="filtroMovimientos" class="form-control mb-3">
+  <div class="wallet-card deposit-card">
+    <p class="wallet-label">ALKE WALLET</p>
+    <h2>Historial financiero</h2>
+    <p class="wallet-subtitle">Revisa tus depósitos y transferencias realizadas</p>
+  </div>
+
+  <label for="filtroMovimientos" class="mt-3">Filtrar por tipo:</label>
+
+  <select id="filtroMovimientos" class="form-control mb-3">
+
         <option value="todos">Todos</option>
         <option value="deposito">Depósito</option>
         <option value="transferencia">Transferencia</option>
       </select>
 
+      <label for="filtroMoneda" class="mt-2">Filtro por moneda:</label>
+
+      <select id="filtroMoneda" class="form-control mb-3">
+        <option value="todas">todas</option>
+        <option value="CLP">Pesos chilenos</option>
+      </select>
+
       <ul id="listaMovimientos" class="list-group"></ul>
 
       <a href="menu.html" class="btn btn-secondary mt-3">
-        Volver al menú
+        ← Volver al menú
       </a>
     </div>
   </div>

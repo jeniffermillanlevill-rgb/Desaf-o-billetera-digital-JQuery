@@ -1,0 +1,147 @@
+body {
+    background-color: #f4f6f8;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.container {
+    max-width: 800px;
+    padding-top: 40px;
+}
+
+h1 {
+    color: #1f2937;
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.card {
+    background: rgb(255, 255, 255);
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.card h2,
+.card h3,
+.card h4 {
+    color: #1f2937;
+}
+
+.form-control {
+    border-radius: 12px;
+}
+
+.btn {
+    border-radius: 12px;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background-color: #0f766e;
+    border-color: #0f766e;
+}
+
+.btn-success {
+    background-color: #15803d;
+    border-color: #15803d;
+}
+
+.btn-info {
+    background-color: #b45309;
+    border-color: #b45309;
+    color: white;
+}
+
+.btn-secondary {
+    background-color: #1e9d8a;
+    border-color: #277774;
+    color: white;
+}
+
+.display-4 {
+    color: #15803d;
+    font-weight: bold;
+}
+
+.list-group-item {
+    border-radius: 10px;
+    margin-bottom: 5px;
+}
+
+.wallet-card {
+  background: linear-gradient(135deg, #1d55ae, #14532d);
+  border-radius: 22px;
+  padding: 28px;
+  color: white;
+  margin-bottom: 25px;
+  box-shadow: 0 15px 30px rgba(15, 118, 110, 0.25);
+}
+
+.wallet-label {
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+  color: #facc15;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.wallet-card h2 {
+  color: white;
+  font-size: 1.4rem;
+  margin-bottom: 10px;
+}
+
+.wallet-card .display-4 {
+  color: white;
+  font-weight: 800;
+  font-size: 3rem;
+}
+
+.wallet-subtitle {
+  color: #d1fae5;
+  margin-bottom: 0;
+}
+
+.deposit-card {
+    margin-bottom: 25px;
+}
+
+#montoDeposito {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    height: 60px;
+}
+
+#montoDeposito::placeholder {
+    color: #9ca3af;
+}
+
+.movimiento-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 18px;
+}
+
+.movimiento-item strong {
+    color: #274c77;
+    font-weight: 700;
+}
+
+.moneda {
+    font-size: 0.45em;
+    font-weight: 500;
+    vertical-align: middle;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.moneda {
+    font-size: 0.45em;
+    font-weight: 500;
+    vertical-align: middle;
+    margin-right: 8px;
+    opacity: 0.9;
+}

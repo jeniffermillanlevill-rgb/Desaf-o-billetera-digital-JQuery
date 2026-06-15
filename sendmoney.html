@@ -5,17 +5,30 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
-  <title>Enviar dinero</title>
+  <title>Transferir fondos</title>
 </head>
 
 <body>
   <div class="container">
-    <h1 class="mt-4">Enviar dinero</h1>
+    <h1 class="mt-4">Transferir fondos</h1>
 
     <div id="alert-container"></div>
 
     <div class="card p-4 mt-3">
-      <h3>Saldo actual: $<span id="saldoEnvio">0</span></h3>
+      <div class="wallet-card deposit-card">
+    <p class="wallet-label">ALKE WALLET</p>
+    <h2>Saldo disponible</h2>
+
+    <p class="display-4">
+      <small class="moneda">CLP</small>
+        $<span id="saldoEnvio">0</span>
+    </p>
+
+
+    <p class="wallet-subtitle">
+        Selecciona un contacto para transferir fondos
+    </p>
+</div>
 
       <button id="btnMostrarContacto" class="btn btn-primary mt-3">
         Agregar nuevo contacto
@@ -23,9 +36,10 @@
 
       <div id="formContacto" class="mt-3" style="display: none;">
         <input type="text" id="nombreContacto" class="form-control mb-2" placeholder="Nombre y apellido">
-        <input type="text" id="cbuContacto" class="form-control mb-2" placeholder="Número de CBU">
-        <input type="text" id="aliasContacto" class="form-control mb-2" placeholder="Alias">
+        <input type="text" id="rutContacto" class="form-control mb-2" placeholder="RUT / ID">
+        <input type="text" id="numeroContacto" class="form-control mb-2" placeholder="Número de Cuenta">
         <input type="text" id="bancoContacto" class="form-control mb-2" placeholder="Nombre del banco">
+        <input type="email" id="emailContacto" class="form-control mb-2" placeholder="Correo electrónico">
 
         <button id="btnGuardarContacto" class="btn btn-success">
           Guardar contacto
@@ -54,7 +68,7 @@
       <p id="mensajeEnvio" class="mt-3"></p>
 
       <a href="menu.html" class="btn btn-secondary mt-3">
-        Volver al menú
+       ← Volver al menú
       </a>
     </div>
   </div>

@@ -15,15 +15,19 @@ $(document).ready(function() {
 
       setTimeout(function() {
         window.location.href = 'menu.html';
-      }, 2000);
+      }, 1500);
     } else {
       $('#alert-container').html('<div class="alert alert-danger mt-3">Usuario o contraseña inválidos. Inténtalo nuevamente.</div>');
     }
   });
 
-  if ($('#balance').length) {
-    $('#balance').text(localStorage.getItem('saldo') || 0);
-  }
+if ($('#balance').length) {
+  var saldoMenu = parseFloat(localStorage.getItem('saldo')) || 0;
+
+  $('#balance').text(
+    saldoMenu.toLocaleString('es-CL')
+  );
+}
 
   $('#btnDepositar').click(function() {
     $('#mensajeMenu').html('<div class="alert alert-info mt-3">Redirigiendo a depósito...</div>');
@@ -46,10 +50,28 @@ $(document).ready(function() {
     }, 1500);
   });
 
-  $('#saldoActual').text(localStorage.getItem('saldo'));
+$('#btnCerrarSesion').click(function() {
+
+  if (confirm('¿Desea cerrar sesión?')) {
+
+    window.location.href = 'index.html';
+
+  }
+
+});
+
+var saldoActual = parseFloat(localStorage.getItem('saldo')) || 0;
+
+
+
+
+$('#saldoActual').text(
+    saldoActual.toLocaleString('es-CL')
+);
 
   $('#btnRealizarDeposito').click(function() {
     var monto = parseFloat($('#montoDeposito').val());
+    var moneda = $('#monedaDeposito').val();
     var saldoActual = parseFloat(localStorage.getItem('saldo'));
 
     if (!isNaN(monto) && monto > 0) {
@@ -58,24 +80,34 @@ $(document).ready(function() {
 
       var movimientos = JSON.parse(localStorage.getItem('movimientos')) || [];
       movimientos.push({
-        tipo: 'deposito',
-        monto: monto
-      });
+  tipo: 'deposito',
+  monto: monto,
+  moneda: moneda
+});
       localStorage.setItem('movimientos', JSON.stringify(movimientos));
 
-      $('#saldoActual').text(nuevoSaldo);
-      $('#mensajeDeposito').html('Monto depositado: $' + monto);
-      $('#alert-container').html('<div class="alert alert-success mt-3">Depósito realizado correctamente.</div>');
+$('#saldoActual').text(
+    nuevoSaldo.toLocaleString('es-CL')
+);
+
+$('#mensajeDeposito').html(
+  ' Depósito realizado por $' +
+  monto.toLocaleString('es-CL')
+);
 
       setTimeout(function() {
         window.location.href = 'menu.html';
-      }, 2000);
+      }, 1500);
     } else {
       $('#alert-container').html('<div class="alert alert-danger mt-3">Ingrese un monto válido.</div>');
     }
   });
 
-  $('#saldoEnvio').text(localStorage.getItem('saldo') || 0);
+  var saldoEnvio = parseFloat(localStorage.getItem('saldo')) || 0;
+
+$('#saldoEnvio').text(
+    saldoEnvio.toLocaleString('es-CL')
+);
 
   $('#btnMostrarContacto').click(function() {
     $('#formContacto').show();
@@ -86,98 +118,126 @@ $(document).ready(function() {
   });
 
   $('#btnGuardarContacto').click(function() {
-    var nombre = $('#nombreContacto').val();
-    var cbu = $('#cbuContacto').val();
-    var alias = $('#aliasContacto').val();
-    var banco = $('#bancoContacto').val();
+  var nombre = $('#nombreContacto').val();
+  var rut = $('#rutContacto').val();
+  var email = $('#emailContacto').val();
+  var numero = $('#numeroContacto').val();
+  var banco = $('#bancoContacto').val();
 
-    if (nombre === '' || cbu === '' || alias === '' || banco === '') {
-      $('#alert-container').html('<div class="alert alert-danger mt-3">Complete todos los campos del contacto.</div>');
-      return;
-    }
+  if (nombre === '' || rut === '' || email === '' || numero === '' || banco === '') {
+    $('#alert-container').html('<div class="alert alert-danger mt-3">Complete todos los campos del contacto.</div>');
+    return;
+  }
 
-    if (cbu.length < 6) {
-      $('#alert-container').html('<div class="alert alert-danger mt-3">El CBU debe tener al menos 6 números.</div>');
-      return;
-    }
+  if (numero.length < 5) {
+    $('#alert-container').html('<div class="alert alert-danger mt-3">El número de cuenta debe tener al menos 5 dígitos.</div>');
+    return;
+  }
 
-    var contactos = JSON.parse(localStorage.getItem('contactos')) || [];
+  var contactos = JSON.parse(localStorage.getItem('contactos')) || [];
 
-    contactos.push({
-      nombre: nombre,
-      cbu: cbu,
-      alias: alias,
-      banco: banco
-    });
-
-    localStorage.setItem('contactos', JSON.stringify(contactos));
-
-    $('#listaContactos').append('<option value="' + nombre + '">' + nombre + ' - ' + alias + '</option>');
-
-    $('#nombreContacto').val('');
-    $('#cbuContacto').val('');
-    $('#aliasContacto').val('');
-    $('#bancoContacto').val('');
-    $('#formContacto').hide();
-
-    $('#alert-container').html('<div class="alert alert-success mt-3">Contacto agregado correctamente.</div>');
+  contactos.push({
+    nombre: nombre,
+    rut: rut,
+    email: email,
+    numero: numero,
+    banco: banco
   });
 
-  $('#listaContactos').change(function() {
-    if ($(this).val() !== '') {
-      $('#btnEnviarMonto').show();
-    } else {
-      $('#btnEnviarMonto').hide();
-    }
+  localStorage.setItem('contactos', JSON.stringify(contactos));
+
+  $('#listaContactos').append(
+    '<option value="' + nombre + '">' + nombre + ' - ' + banco + '</option>'
+  );
+
+  $('#nombreContacto').val('');
+  $('#rutContacto').val('');
+  $('#emailContacto').val('');
+  $('#numeroContacto').val('');
+  $('#bancoContacto').val('');
+
+  $('#formContacto').hide();
+
+  $('#alert-container').html('<div class="alert alert-success mt-3">Contacto agregado correctamente.</div>');
+});
+
+$('#listaContactos').change(function() {
+  if ($(this).val() !== '') {
+    $('#btnEnviarMonto').show();
+  } else {
+    $('#btnEnviarMonto').hide();
+  }
+});
+
+$('#btnEnviarMonto').click(function() {
+  var monto = parseFloat($('#montoEnviar').val());
+  var saldo = parseFloat(localStorage.getItem('saldo')) || 0;
+  var contacto = $('#listaContactos').val();
+
+  if (contacto === '') {
+    $('#alert-container').html('<div class="alert alert-danger mt-3">Seleccione un contacto.</div>');
+    return;
+  }
+
+  if (isNaN(monto) || monto <= 0) {
+    $('#alert-container').html('<div class="alert alert-danger mt-3">Ingrese un monto válido.</div>');
+    return;
+  }
+
+  if (monto > saldo) {
+    $('#alert-container').html('<div class="alert alert-danger mt-3">Saldo insuficiente.</div>');
+    return;
+  }
+
+  var nuevoSaldo = saldo - monto;
+  localStorage.setItem('saldo', nuevoSaldo);
+
+  var movimientos = JSON.parse(localStorage.getItem('movimientos')) || [];
+
+  movimientos.push({
+    tipo: 'transferencia',
+    monto: monto
   });
 
-  $('#btnEnviarMonto').click(function() {
-    var monto = parseFloat($('#montoEnviar').val());
-    var saldo = parseFloat(localStorage.getItem('saldo')) || 0;
-    var contacto = $('#listaContactos').val();
+  localStorage.setItem('movimientos', JSON.stringify(movimientos));
 
-    if (contacto === '') {
-      $('#alert-container').html('<div class="alert alert-danger mt-3">Seleccione un contacto.</div>');
-      return;
-    }
+  $('#saldoEnvio').text(nuevoSaldo.toLocaleString('es-CL'));
 
-    if (isNaN(monto) || monto <= 0) {
-      $('#alert-container').html('<div class="alert alert-danger mt-3">Ingrese un monto válido.</div>');
-      return;
-    }
+  $('#mensajeEnvio').html(
+    'Transferencia realizada correctamente a ' +
+    contacto +
+    ' por $' +
+    monto.toLocaleString('es-CL')
+  );
 
-    if (monto > saldo) {
-      $('#alert-container').html('<div class="alert alert-danger mt-3">Saldo insuficiente.</div>');
-      return;
-    }
+  $('#alert-container').html('<div class="alert alert-success mt-3">Dinero enviado correctamente.</div>');
+});
 
-    var nuevoSaldo = saldo - monto;
-    localStorage.setItem('saldo', nuevoSaldo);
-
-    var movimientos = JSON.parse(localStorage.getItem('movimientos')) || [];
-    movimientos.push({
-      tipo: 'transferencia',
-      monto: monto
-    });
-    localStorage.setItem('movimientos', JSON.stringify(movimientos));
-
-    $('#saldoEnvio').text(nuevoSaldo);
-    $('#mensajeEnvio').html('Envío realizado correctamente a ' + contacto + ' por $' + monto);
-    $('#alert-container').html('<div class="alert alert-success mt-3">Dinero enviado correctamente.</div>');
-  });
-
-  function mostrarUltimosMovimientos(filtro) {
+    function mostrarUltimosMovimientos(filtro) {
     var movimientos = JSON.parse(localStorage.getItem('movimientos')) || [];
     $('#listaMovimientos').empty();
 
-    if (movimientos.length === 0) {
-      $('#listaMovimientos').append('<li class="list-group-item">No hay movimientos registrados.</li>');
-      return;
-    }
+if (movimientos.length === 0) {
+  $('#listaMovimientos').append(
+    '<li class="list-group-item">No hay movimientos registrados.</li>'
+  );
+  return;
+}
 
     movimientos.forEach(function(movimiento) {
       if (filtro === 'todos' || movimiento.tipo === filtro) {
-        $('#listaMovimientos').append('<li class="list-group-item">' + movimiento.tipo + ' - $' + movimiento.monto + '</li>');
+var tipoTexto = movimiento.tipo === 'deposito'
+    ? 'Depósito'
+    : 'Transferencia';
+
+var montoFormateado = Number(movimiento.monto).toLocaleString('es-CL');
+
+$('#listaMovimientos').append(
+    '<li class="list-group-item movimiento-item">' +
+        '<span>' + tipoTexto + '</span>' +
+       '<strong>CLP $' + montoFormateado + '</strong>' + 
+        '</li>'
+);
       }
     });
   }
@@ -197,15 +257,15 @@ $('#buscarContacto').keyup(function() {
   $('#listaContactos').append('<option value="">Seleccione un contacto</option>');
 
   contactos.forEach(function(contacto) {
-    var nombre = contacto.nombre.toLowerCase();
-    var alias = contacto.alias.toLowerCase();
+  var nombre = contacto.nombre.toLowerCase();
+var banco = contacto.banco.toLowerCase();
 
-    if (nombre.includes(textoBusqueda) || alias.includes(textoBusqueda)) {
+if (nombre.includes(textoBusqueda) || banco.includes(textoBusqueda)) {  
       $('#listaContactos').append(
-        '<option value="' + contacto.nombre + '">' + contacto.nombre + ' - ' + contacto.alias + '</option>'
-      );
+'<option value="' + contacto.nombre + '">' + contacto.nombre + ' - ' + contacto.banco + '</option>'      );
     }
   });
 });
 
 });
+
